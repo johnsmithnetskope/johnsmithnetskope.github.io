@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo Educativo - Login</title>
+    <!-- Fuente similar -->
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        :root {
+            --red: #e50914;
+            --dark: #141414;
+            --gray: #737373;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0') no-repeat center/cover fixed;
+            height: 100vh;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.8);
+            height: 100%;
+        }
+
+        /* Logo */
+        .netflix-logo {
+            width: 167px;
+            height: 45px;
+            margin: 20px 0 0 40px;
+        }
+
+        /* Contenedor del formulario */
+        .login-container {
+            background: rgba(0, 0, 0, 0.75);
+            width: 450px;
+            margin: 0 auto;
+            padding: 60px 68px;
+            border-radius: 4px;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 28px;
+            font-size: 32px;
+        }
+
+        /* Campos del formulario */
+        .input-field {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 16px;
+            background: #333;
+            border: none;
+            border-radius: 4px;
+            padding: 16px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            background: #454545;
+        }
+
+        /* Botón de acceso */
+        .login-button {
+            width: 100%;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 24px 0 12px;
+            cursor: pointer;
+        }
+
+        /* Opciones adicionales */
+        .options {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 50px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .help-link {
+            color: var(--gray);
+            text-decoration: none;
+        }
+
+        /* Nuevo usuario */
+        .signup {
+            color: var(--gray);
+            margin-top: 40px;
+        }
+
+        .signup a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <!-- Logo genérico (no es el oficial) -->
+        <img 
+            src="https://www.freepnglogos.com/uploads/red-netflix-logo-text-png-3.png" 
+            alt="Logo Educativo" 
+            class="netflix-logo"
+        >
+
+        <!-- Formulario -->
+        <div class="login-container">
+            <h1>Iniciar sesión</h1>
+            <form method="POST" action="login.php">
+                <input type="email" class="input-field" name="email" placeholder="Correo electrónico" required>
+                <input type="password" class="input-field" name="password" placeholder="Contraseña" required>
+                <button type="submit" class="login-button">Acceder</button>
+            </form>
+
+            <!-- Opciones -->
+            <div class="options">
+                <label class="remember-me">
+                    <input type="checkbox"> Recuérdame
+                </label>
+                <a href="#" class="help-link">¿Necesitas ayuda?</a>
+            </div>
+
+            <!-- Registro -->
+            <div class="signup">
+                <span>¿Primera vez en Netflix? </span>
+                <a href="#">Suscríbete ya.</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
