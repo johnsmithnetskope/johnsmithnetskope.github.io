@@ -4,9 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejemplo Educativo - Login</title>
+    <!-- Normalize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <style>
-        /* Estilos previos (igual que en el ejemplo anterior) */
+        :root {
+            --red: #e50914;
+            --dark: #141414;
+            --gray: #737373;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0') no-repeat center/cover fixed;
+            height: 100vh;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.8);
+            height: 100%;
+        }
+
+        .netflix-logo {
+            width: 167px;
+            height: 45px;
+            margin: 20px 0 0 40px;
+        }
+
+        .login-container {
+            background: rgba(0, 0, 0, 0.75);
+            width: 450px;
+            margin: 0 auto;
+            padding: 60px 68px;
+            border-radius: 4px;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 28px;
+            font-size: 32px;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 16px;
+            background: #333;
+            border: none;
+            border-radius: 4px;
+            padding: 16px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .login-button {
+            width: 100%;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 24px 0 12px;
+            cursor: pointer;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 13px;
+            margin-bottom: 50px;
+        }
+
+        .signup {
+            color: var(--gray);
+            margin-top: 40px;
+        }
+
+        .signup a {
+            color: white;
+            text-decoration: none;
+        }
 
         /* Popup de datos */
         .data-popup {
@@ -33,15 +118,16 @@
             padding: 20px;
             border-radius: 5px;
             overflow-x: auto;
+            white-space: pre-wrap;
+            margin: 15px 0;
         }
 
         .close-btn {
-            background: #E50914;
+            background: var(--red);
             color: white;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
-            margin-top: 15px;
             float: right;
         }
     </style>
@@ -62,36 +148,45 @@
                 <button type="submit" class="login-button">Acceder</button>
             </form>
 
-            <!-- Popup de datos -->
-            <div id="dataPopup" class="data-popup">
-                <h2>Datos ingresados (Ejemplo educativo)</h2>
-                <pre id="dataContent"></pre>
-                <button class="close-btn" onclick="closePopup()">Cerrar</button>
+            <div class="options">
+                <label class="remember-me">
+                    <input type="checkbox"> Recuérdame
+                </label>
+                <a href="#" class="help-link">¿Necesitas ayuda?</a>
             </div>
 
-            <!-- ... resto del código anterior ... -->
+            <div class="signup">
+                <span>¿Primera vez aquí? </span>
+                <a href="#">Regístrate ahora.</a>
+            </div>
+        </div>
+
+        <!-- Popup de datos -->
+        <div id="dataPopup" class="data-popup">
+            <h2>⚠️ Datos simulados (Ejemplo educativo)</h2>
+            <pre id="dataContent"></pre>
+            <button class="close-btn" onclick="closePopup()">Cerrar</button>
         </div>
     </div>
 
     <script>
         function showData(event) {
-            event.preventDefault();  // Evitar envío real
+            event.preventDefault();
 
-            // Obtener datos
+            // Obtener valores
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             // Mostrar en popup
             document.getElementById('dataContent').textContent = 
-                `Email: ${email}\nContraseña: ${password}\n\n⚠️ ADVERTENCIA:\nEsto es una demostración técnica.\nNUNCA muestres contraseñas en producción.`;
+                `Email: ${email}\nContraseña: ${password}\n\n⚠️ ADVERTENCIA:\nEste es un ejemplo técnico.\nNUNCA muestres contraseñas en la interfaz real.`;
 
             document.getElementById('dataPopup').classList.add('visible');
-            return false;
         }
 
         function closePopup() {
             document.getElementById('dataPopup').classList.remove('visible');
-            document.getElementById('loginForm').reset();  // Limpiar formulario
+            document.getElementById('loginForm').reset();
         }
     </script>
 </body>
